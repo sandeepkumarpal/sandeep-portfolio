@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import {
@@ -9,16 +10,127 @@ import {
   FolderGit,
   Building2,
   Send,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { GITHUB_URL, LINKEDIN_URL } from "@/lib/social-links";
+import {
+  type ContactField,
+  type ContactFieldErrors,
+  type ContactValidationError,
+  sanitizeContactField,
+  submitContactForm,
+  validateAllContactFields,
+} from "@/lib/contact-form";
 import { FadeIn } from "@/components/ui/fade-in";
 import { sectionContent, sectionHeading, sectionInner } from "@/lib/section-styles";
+import { cn } from "@/lib/utils";
+
+const ERROR_KEYS: Record<ContactValidationError, string> = {
+  required: "contact.form.errorRequired",
+  invalidChars: "contact.form.errorInvalidChars",
+  invalidName: "contact.form.errorInvalidName",
+  invalidEmail: "contact.form.errorInvalidEmail",
+  messageTooShort: "contact.form.errorMessageTooShort",
+  messageTooLong: "contact.form.errorMessageTooLong",
+  nameTooShort: "contact.form.errorNameTooShort",
+  nameTooLong: "contact.form.errorNameTooLong",
+};
+
+function FieldError({
+  id,
+  error,
+  message,
+}: {
+  id: string;
+  error?: ContactValidationError;
+  message: string;
+}) {
+  if (!error) return null;
+
+  return (
+    <p id={id} role="alert" className="text-xs font-medium text-red-600 dark:text-red-400">
+      {message}
+    </p>
+  );
+}
 
 export function Contact() {
   const { t } = useTranslation();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({});
+  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
+    "idle"
+  );
+  const [formFeedback, setFormFeedback] = useState("");
+
+  const syncFieldValidation = (field: ContactField, value: string) => {
+    if (!hasAttemptedSubmit) return;
+
+    const result = sanitizeContactField(value, field);
+    setFieldErrors((prev) => {
+      const next = { ...prev };
+      if (result.ok) {
+        delete next[field];
+      } else {
+        next[field] = result.error;
+      }
+      return next;
+    });
+  };
+
+  const handleFieldChange = (
+    field: ContactField,
+    value: string,
+    setter: (value: string) => void
+  ) => {
+    setter(value);
+    syncFieldValidation(field, value);
+  };
+
+  const errorMessage = (error?: ContactValidationError) =>
+    error ? t(ERROR_KEYS[error]) : "";
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("idle");
+    setFormFeedback("");
+    setHasAttemptedSubmit(true);
+
+    const { errors, data } = validateAllContactFields({ name, email, message });
+    if (!data) {
+      setFieldErrors(errors);
+      return;
+    }
+
+    setFieldErrors({});
+    setStatus("sending");
+
+    const result = await submitContactForm(data, honeypot);
+
+    if (!result.ok) {
+      setStatus("error");
+      if (result.reason === "notConfigured") {
+        setFormFeedback(t("contact.form.errorNotConfigured"));
+      } else {
+        setFormFeedback(t("contact.form.errorNetwork"));
+      }
+      return;
+    }
+
+    setStatus("success");
+    setFormFeedback(t("contact.form.success"));
+    setHasAttemptedSubmit(false);
+    setName("");
+    setEmail("");
+    setMessage("");
+  };
 
   return (
     <section
@@ -97,19 +209,128 @@ export function Contact() {
               transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
               aria-hidden
             />
-            <form className="relative space-y-4" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <Input placeholder={t("contact.form.name")} className="bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900" />
-                <Input type="email" placeholder={t("contact.form.email")} className="bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900" />
-              </div>
-              <Textarea
-                placeholder={t("contact.form.message")}
-                className="min-h-[150px] bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900"
+            <form
+              className="relative space-y-4"
+              onSubmit={handleSubmit}
+              noValidate
+            >
+              {/* Honeypot — hidden from users, bots often fill it */}
+              <input
+                type="text"
+                name="botcheck"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                className="pointer-events-none absolute left-[-9999px] h-0 w-0 opacity-0"
+                aria-hidden
               />
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-1.5">
+                  <Input
+                    name="name"
+                    value={name}
+                    onChange={(e) => handleFieldChange("name", e.target.value, setName)}
+                    placeholder={t("contact.form.name")}
+                    required
+                    minLength={2}
+                    maxLength={80}
+                    autoComplete="name"
+                    disabled={status === "sending"}
+                    aria-invalid={Boolean(fieldErrors.name)}
+                    aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
+                    className={cn(
+                      "bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900",
+                      fieldErrors.name && "border-red-500 focus-visible:ring-red-500/30"
+                    )}
+                  />
+                  <FieldError
+                    id="contact-name-error"
+                    error={fieldErrors.name}
+                    message={errorMessage(fieldErrors.name)}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Input
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => handleFieldChange("email", e.target.value, setEmail)}
+                    placeholder={t("contact.form.email")}
+                    required
+                    maxLength={254}
+                    autoComplete="email"
+                    disabled={status === "sending"}
+                    aria-invalid={Boolean(fieldErrors.email)}
+                    aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
+                    className={cn(
+                      "bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900",
+                      fieldErrors.email && "border-red-500 focus-visible:ring-red-500/30"
+                    )}
+                  />
+                  <FieldError
+                    id="contact-email-error"
+                    error={fieldErrors.email}
+                    message={errorMessage(fieldErrors.email)}
+                  />
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <Textarea
+                  name="message"
+                  value={message}
+                  onChange={(e) => handleFieldChange("message", e.target.value, setMessage)}
+                  placeholder={t("contact.form.message")}
+                  required
+                  minLength={10}
+                  maxLength={2000}
+                  disabled={status === "sending"}
+                  aria-invalid={Boolean(fieldErrors.message)}
+                  aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
+                  className={cn(
+                    "min-h-[150px] bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900",
+                    fieldErrors.message && "border-red-500 focus-visible:ring-red-500/30"
+                  )}
+                />
+                <FieldError
+                  id="contact-message-error"
+                  error={fieldErrors.message}
+                  message={errorMessage(fieldErrors.message)}
+                />
+              </div>
+
+              {formFeedback ? (
+                <p
+                  role="status"
+                  className={cn(
+                    "text-center text-sm font-medium",
+                    status === "success"
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : "text-red-600 dark:text-red-400"
+                  )}
+                >
+                  {formFeedback}
+                </p>
+              ) : null}
+
               <div className="flex justify-center">
-                <Button className="gap-2 bg-emerald-600 transition-all duration-300 group-hover/form:shadow-lg group-hover/form:shadow-emerald-500/20 hover:-translate-y-0.5 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600">
-                  {t("contact.form.send")}
-                  <Send className="h-4 w-4 transition-transform duration-300 group-hover/form:translate-x-0.5 group-hover/form:-translate-y-0.5" />
+                <Button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="gap-2 bg-emerald-600 transition-all duration-300 group-hover/form:shadow-lg group-hover/form:shadow-emerald-500/20 hover:-translate-y-0.5 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600"
+                >
+                  {status === "sending" ? (
+                    <>
+                      {t("contact.form.sending")}
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    </>
+                  ) : (
+                    <>
+                      {t("contact.form.send")}
+                      <Send className="h-4 w-4 transition-transform duration-300 group-hover/form:translate-x-0.5 group-hover/form:-translate-y-0.5" />
+                    </>
+                  )}
                 </Button>
               </div>
             </form>

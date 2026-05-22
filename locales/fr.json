@@ -176,7 +176,19 @@
       "name": "Votre nom",
       "email": "Votre e-mail",
       "message": "Votre message",
-      "send": "Envoyer le message"
+      "send": "Envoyer le message",
+      "sending": "Envoi en cours…",
+      "success": "Message envoyé ! Je vous répondrai bientôt.",
+      "errorNetwork": "Échec de l'envoi. Réessayez ou écrivez-moi directement par e-mail.",
+      "errorNotConfigured": "Le formulaire de contact n'est pas encore configuré.",
+      "errorInvalidChars": "Supprimez les caractères spéciaux comme < > { } [ ] \\ / `.",
+      "errorInvalidName": "Entrez un nom valide (lettres et ponctuation simple uniquement).",
+      "errorInvalidEmail": "Entrez une adresse e-mail valide.",
+      "errorRequired": "Veuillez remplir tous les champs.",
+      "errorNameTooShort": "Le nom doit contenir au moins 2 caractères.",
+      "errorNameTooLong": "Le nom est trop long.",
+      "errorMessageTooShort": "Le message doit contenir au moins 10 caractères.",
+      "errorMessageTooLong": "Le message est trop long (2000 caractères max.)."
     },
     "terminal": {
       "message": "Créons ensemble quelque chose d'impactant !"
