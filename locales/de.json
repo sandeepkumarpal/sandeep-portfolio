@@ -182,6 +182,10 @@
       "message": "Lass uns gemeinsam etwas Wirkungsvolles bauen!"
     }
   },
+  "whatsapp": {
+    "ariaLabel": "Über WhatsApp chatten",
+    "defaultMessage": "Hallo Sandeep, ich habe dein Portfolio gesehen und möchte mich gerne vernetzen."
+  },
   "footer": {
     "copyright": "© 2026 Sandeep Kumar. Alle Rechte vorbehalten.",
     "builtWith": "Erstellt mit ❤️ mit dem MERN-Stack",
