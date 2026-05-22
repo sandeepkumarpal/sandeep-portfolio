@@ -14,8 +14,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sandeep — Portfolio",
-  description: "Developer portfolio",
+  title: "Sandeep | Portfolio",
+  description:
+    "Full-stack developer portfolio — Sandeep Kumar Pal. React, Node.js, and modern web engineering.",
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({
