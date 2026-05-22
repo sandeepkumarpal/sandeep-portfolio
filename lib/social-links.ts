@@ -6,4 +6,4 @@ export const RESUME_URL = "/Sandeep_kumar_Resume.pdf";
 export const RESUME_FILENAME = "Sandeep_kumar_Resume.pdf";
 
 /** Hero profile photo — add this file under public/ */
-export const PROFILE_IMAGE = "/profile.jpg";
+export const PROFILE_IMAGE = "/profile.png";
