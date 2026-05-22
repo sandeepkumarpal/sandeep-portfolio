@@ -1,0 +1,190 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "skills": "Compétences",
+    "experience": "Expérience",
+    "projects": "Projets",
+    "testimonials": "Témoignages",
+    "contact": "Contact"
+  },
+  "header": {
+    "logo": "</> Sandeep.",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "toggleTheme": "Changer de thème"
+  },
+  "home": {
+    "badge": "Disponible pour des opportunités",
+    "greeting": "Bonjour, je suis",
+    "name": "Sandeep",
+    "role": "Développeur full stack · Orienté frontend",
+    "description": "Je conçois et réalise des applications web évolutives avec une architecture claire et le souci du détail.",
+    "ctaWork": "Voir mon travail",
+    "ctaGithub": "GitHub",
+    "ctaResume": "Télécharger le CV",
+    "stats": {
+      "experience": "Années d'expérience",
+      "projects": "Projets réalisés",
+      "clients": "Clients satisfaits",
+      "dedication": "Engagement"
+    },
+    "editor": {
+      "tabAbout": "about.js",
+      "tabSkills": "skills.json",
+      "tabExperience": "experience.js",
+      "snippetAbout": "// About Me\nconst developer = {\n  name: \"Sandeep Kumar\",\n  role: \"MERN Developer\",\n  focus: \"Frontend Heavy\",\n  passion: \"Building functional and scalable web applications\",\n  skills: [\"React\", \"Next.js\", \"Node.js\", \"Express\", \"MongoDB\", \"Tailwind CSS\"],\n  currentlyLearning: \"System Design & Backend Optimizations\",\n  funFact: \"I love solving real-world problems with code 💻\",\n}\n\n// Let's build something impactful!",
+      "snippetSkills": "{\n  \"$schema\": \"https://example.com/developer.schema.json\",\n  \"name\": \"Sandeep Kumar\",\n  \"title\": \"MERN Developer\",\n  \"location\": \"Remote / India\",\n  \"languages\": [\"JavaScript\", \"TypeScript\"],\n  \"frontend\": [\"React\", \"Next.js\", \"Tailwind CSS\", \"Redux\"],\n  \"backend\": [\"Node.js\", \"Express\"],\n  \"data\": [\"MongoDB\", \"Redis\"],\n  \"tools\": [\"Git\", \"Docker\", \"REST APIs\", \"Jest\"],\n  \"highlights\": {\n    \"focus\": \"Clean UI, solid APIs\",\n    \"yearsActive\": 2,\n    \"projectsShipped\": 15\n  }\n}",
+      "snippetExperience": "// Experience snapshot\nconst roles = [\n  {\n    title: \"Full Stack Developer\",\n    period: \"2023 – Present\",\n    stack: [\"MERN\", \"Next.js\", \"TypeScript\"],\n    focus: \"Scalable APIs & polished UI\",\n  },\n];\n\n// Full timeline on the Experience section →"
+    }
+  },
+  "about": {
+    "title": "Qui je suis",
+    "subtitle": "// À PROPOS DE MOI",
+    "description": "Je suis un développeur stack MERN qui aime écrire du code propre, efficace et maintenable. J'aime transformer des idées en produits réels avec un fort accent sur la fonctionnalité, la performance et l'évolutivité.",
+    "points": [
+      "Frontend lourd avec une forte compréhension du backend",
+      "Résolveur de problèmes et penseur critique",
+      "Défenseur du code propre",
+      "Toujours apprendre de nouvelles technologies"
+    ],
+    "drivesTitle": "Ce qui me motive",
+    "drives": [
+      {
+        "title": "Résoudre des problèmes du monde réel avec du code",
+        "icon": "Code"
+      },
+      {
+        "title": "Construire des fonctionnalités que les utilisateurs utilisent réellement",
+        "icon": "Target"
+      },
+      {
+        "title": "Code propre, maintenable et évolutif",
+        "icon": "Layout"
+      },
+      {
+        "title": "Performance, sécurité et meilleures pratiques",
+        "icon": "Shield"
+      }
+    ]
+  },
+  "skillsSection": {
+    "title": "Technologies avec lesquelles je travaille",
+    "subtitle": "// TECH STACK"
+  },
+  "experience": {
+    "title": "Mon parcours",
+    "subtitle": "// EXPÉRIENCE",
+    "viewFull": "Voir l'expérience complète",
+    "items": [
+      {
+        "title": "Développeur MERN",
+        "company": "Antier Solutions",
+        "period": "2023 - Présent",
+        "description": "Construction d'applications full-stack avec un accent sur la performance, l'évolutivité et une excellente expérience utilisateur.",
+        "technologies": [
+          "React",
+          "Node.js",
+          "Express.js",
+          "MongoDB",
+          "Tailwind CSS"
+        ]
+      },
+      {
+        "title": "Développeur Frontend",
+        "company": "Suffescom Technologies",
+        "period": "2022 - 2023",
+        "description": "Réalisation d'applications web réactives et interactives avec des bibliothèques frontend modernes.",
+        "technologies": ["React", "Redux", "JavaScript", "REST APIs", "Git"]
+      },
+      {
+        "title": "Stagiaire Frontend",
+        "company": "Startlink Technologies",
+        "period": "2021 - 2022",
+        "description": "Travail sur les composants UI, intégration d'APIs et amélioration de la performance des applications.",
+        "technologies": ["HTML", "CSS", "JavaScript", "Bootstrap", "Git"]
+      }
+    ]
+  },
+  "projects": {
+    "title": "Projets vedettes",
+    "subtitle": "// PROJETS",
+    "viewAll": "Voir tous les projets",
+    "items": [
+      {
+        "title": "TaskFlow",
+        "description": "Une application de productivité pour gérer les tâches, les équipes et les projets efficacement.",
+        "tags": ["MERN", "Socket.io", "JWT", "Tailwind"],
+        "github": "https://github.com",
+        "external": "https://example.com",
+        "image": "/projects/taskflow.png",
+        "color": "emerald"
+      },
+      {
+        "title": "DevBlog",
+        "description": "Une plateforme de blog full-stack avec authentification et support Markdown.",
+        "tags": ["Next.js", "MongoDB", "Tailwind", "MDX"],
+        "github": "https://github.com",
+        "external": "https://example.com",
+        "image": "/projects/devblog.png",
+        "color": "blue"
+      },
+      {
+        "title": "E-Commerce Store",
+        "description": "Une application e-commerce full-stack avec panier, commandes et paiements.",
+        "tags": ["React", "Node.js", "Express", "Stripe"],
+        "github": "https://github.com",
+        "external": "https://example.com",
+        "image": "/projects/ecommerce.png",
+        "color": "purple"
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Ce que les gens disent",
+    "subtitle": "// TÉMOIGNAGES",
+    "items": [
+      {
+        "name": "Rahul Sharma",
+        "role": "Lead technique",
+        "company": "CodeNest Labs",
+        "quote": "Sandeep fournit constamment des solutions propres et évolutives, et rend les fonctionnalités complexes simples pour les utilisateurs comme pour les développeurs."
+      },
+      {
+        "name": "Priya Verma",
+        "role": "Product Manager",
+        "company": "BrightStack",
+        "quote": "Il comprend profondément les objectifs produit et les transforme en interfaces soignées avec une intégration backend fiable."
+      },
+      {
+        "name": "Amit Kulkarni",
+        "role": "Fondateur",
+        "company": "StartupSprint",
+        "quote": "Excellent sens des responsabilités, communication claire et exécution solide. Travailler avec Sandeep a rendu la livraison plus rapide et plus fluide."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Construisons quelque chose ensemble",
+    "subtitle": "// CONTACT",
+    "email": "palsandeep894.dev@gmail.com",
+    "phone": "+91 6268283648",
+    "location": "Inde",
+    "github": "github.com/sandeepkumarpal",
+    "linkedin": "linkedin.com/in/sandeeppal894",
+    "form": {
+      "name": "Votre nom",
+      "email": "Votre e-mail",
+      "message": "Votre message",
+      "send": "Envoyer le message"
+    },
+    "terminal": {
+      "message": "Créons ensemble quelque chose d'impactant !"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 Sandeep Kumar. Tous droits réservés.",
+    "builtWith": "Construit avec ❤️ en utilisant la stack MERN",
+    "scrollTop": "Remonter en haut"
+  }
+}
