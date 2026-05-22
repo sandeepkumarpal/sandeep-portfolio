@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import {
@@ -16,6 +17,7 @@ import { HeroEditorPanel } from "@/components/sections/hero-editor-panel";
 import {
   GITHUB_URL,
   LINKEDIN_URL,
+  PROFILE_IMAGE,
   RESUME_FILENAME,
   RESUME_URL,
 } from "@/lib/social-links";
@@ -188,9 +190,14 @@ export function Home() {
               }}
               className="relative h-36 w-36 overflow-hidden rounded-full border-4 border-emerald-500/60 bg-linear-to-br from-emerald-100 to-white shadow-[0_0_32px_-4px_rgba(16,185,129,0.45)] dark:from-emerald-950 dark:to-zinc-800 dark:shadow-[0_0_32px_-4px_rgba(16,185,129,0.35)] sm:h-44 sm:w-44"
             >
-              <div className="flex h-full w-full items-center justify-center font-mono text-4xl font-bold text-emerald-800 dark:text-emerald-300">
-                {t("home.name").slice(0, 1)}
-              </div>
+              <Image
+                src={PROFILE_IMAGE}
+                alt={`${t("home.name")} profile`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1280px) 176px, 208px"
+                priority
+              />
             </motion.div>
           </FadeIn>
 
@@ -227,9 +234,14 @@ export function Home() {
                   }}
                   className="pointer-events-auto relative h-44 w-44 overflow-hidden rounded-full border-4 border-emerald-500/70 bg-linear-to-br from-emerald-100 to-white shadow-[0_0_0_6px_rgba(255,255,255,0.95),0_0_40px_-6px_rgba(16,185,129,0.55)] dark:from-emerald-950 dark:to-zinc-800 dark:shadow-[0_0_0_6px_rgba(9,9,11,0.95),0_0_40px_-6px_rgba(16,185,129,0.4)] xl:h-52 xl:w-52"
                 >
-                  <div className="flex h-full w-full items-center justify-center font-mono text-4xl font-bold text-emerald-800 dark:text-emerald-300 xl:text-5xl">
-                    {t("home.name").slice(0, 1)}
-                  </div>
+                  <Image
+                    src={PROFILE_IMAGE}
+                    alt={`${t("home.name")} profile`}
+                    fill
+                    className="object-cover"
+                    sizes="208px"
+                    priority
+                  />
                 </motion.div>
               </FadeIn>
             </div>
