@@ -21,6 +21,7 @@ import {
   RESUME_FILENAME,
   RESUME_URL,
 } from "@/lib/social-links";
+import { CountUp } from "@/components/ui/count-up";
 import { FadeIn } from "@/components/ui/fade-in";
 
 export function Home() {
@@ -29,22 +30,27 @@ export function Home() {
   const stats = [
     {
       icon: Briefcase,
-      value: "5+",
+      end: 5,
+      suffix: "+",
       label: t("home.stats.experience"),
     },
     {
       icon: FolderKanban,
-      value: "15+",
+      end: 15,
+      suffix: "+",
       label: t("home.stats.projects"),
     },
     {
       icon: Users,
-      value: "10+",
+      end: 10,
+      suffix: "+",
       label: t("home.stats.clients"),
     },
     {
       icon: Sparkles,
-      value: "100%",
+      end: 100,
+      suffix: "%",
+      duration: 2500,
       label: t("home.stats.dedication"),
     },
   ];
@@ -145,7 +151,7 @@ export function Home() {
           </FadeIn>
 
           <dl className="grid w-full max-w-md grid-cols-2 gap-3 sm:max-w-none sm:grid-cols-4 sm:gap-4 xl:max-w-2xl">
-            {stats.map(({ icon: Icon, value, label }, idx) => (
+            {stats.map(({ icon: Icon, end, suffix, duration, label }, idx) => (
               <FadeIn
                 key={label}
                 delay={0.6 + idx * 0.1}
@@ -161,8 +167,8 @@ export function Home() {
                     <Icon className="h-4 w-4" aria-hidden />
                   </div>
                   <dt className="sr-only">{label}</dt>
-                  <dd className="text-xl font-semibold tabular-nums text-zinc-900 dark:text-zinc-50 sm:text-2xl">
-                    {value}
+                  <dd className="text-xl font-semibold text-zinc-900 dark:text-zinc-50 sm:text-2xl">
+                    <CountUp end={end} suffix={suffix} duration={duration} />
                   </dd>
                   <dd className="text-[11px] font-medium leading-snug text-zinc-500 dark:text-zinc-400 sm:text-xs">
                     {label}

@@ -176,11 +176,27 @@
       "name": "Your Name",
       "email": "Your Email",
       "message": "Your Message",
-      "send": "Send Message"
+      "send": "Send Message",
+      "sending": "Sending…",
+      "success": "Message sent! I'll get back to you soon.",
+      "errorNetwork": "Could not send. Please try again or email me directly.",
+      "errorNotConfigured": "Contact form is not configured yet.",
+      "errorInvalidChars": "Remove special characters like < > { } [ ] \\ / `.",
+      "errorInvalidName": "Enter a valid name (letters and basic punctuation only).",
+      "errorInvalidEmail": "Enter a valid email address.",
+      "errorRequired": "Please fill in all fields.",
+      "errorNameTooShort": "Name must be at least 2 characters.",
+      "errorNameTooLong": "Name is too long.",
+      "errorMessageTooShort": "Message must be at least 10 characters.",
+      "errorMessageTooLong": "Message is too long (max 2000 characters)."
     },
     "terminal": {
       "message": "Let's build something impactful together!"
     }
+  },
+  "whatsapp": {
+    "ariaLabel": "Chat on WhatsApp",
+    "defaultMessage": "Hi Sandeep, I came across your portfolio and would like to connect."
   },
   "footer": {
     "copyright": "© 2026 Sandeep Kumar. All rights reserved.",
