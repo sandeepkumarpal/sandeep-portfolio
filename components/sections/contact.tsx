@@ -111,9 +111,11 @@ export function Contact() {
 
     setFieldErrors({});
     setStatus("sending");
+    console.log('data :>> ', data);
+    console.log('honeypot :>> ', honeypot);
 
     const result = await submitContactForm(data, honeypot);
-
+    console.log('result :>> ', result);
     if (!result.ok) {
       setStatus("error");
       if (result.reason === "notConfigured") {
@@ -131,6 +133,7 @@ export function Contact() {
     setEmail("");
     setMessage("");
   };
+  console.log("latest build")
 
   return (
     <section
@@ -203,137 +206,137 @@ export function Contact() {
               transition={{ type: "spring", stiffness: 260, damping: 24 }}
               className="group/form relative overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-950 sm:p-8"
             >
-            <motion.div
-              className="pointer-events-none absolute -right-10 -bottom-10 h-28 w-28 rounded-full bg-emerald-500/10 blur-2xl"
-              animate={{ scale: [1, 1.2, 1], opacity: [0.35, 0.7, 0.35] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-              aria-hidden
-            />
-            <form
-              className="relative space-y-4"
-              onSubmit={handleSubmit}
-              noValidate
-            >
-              {/* Honeypot — hidden from users, bots often fill it */}
-              <input
-                type="text"
-                name="botcheck"
-                value={honeypot}
-                onChange={(e) => setHoneypot(e.target.value)}
-                tabIndex={-1}
-                autoComplete="off"
-                className="pointer-events-none absolute left-[-9999px] h-0 w-0 opacity-0"
+              <motion.div
+                className="pointer-events-none absolute -right-10 -bottom-10 h-28 w-28 rounded-full bg-emerald-500/10 blur-2xl"
+                animate={{ scale: [1, 1.2, 1], opacity: [0.35, 0.7, 0.35] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
                 aria-hidden
               />
+              <form
+                className="relative space-y-4"
+                onSubmit={handleSubmit}
+                noValidate
+              >
+                {/* Honeypot — hidden from users, bots often fill it */}
+                <input
+                  type="text"
+                  name="botcheck"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="pointer-events-none absolute left-[-9999px] h-0 w-0 opacity-0"
+                  aria-hidden
+                />
 
-              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="space-y-1.5">
+                    <Input
+                      name="name"
+                      value={name}
+                      onChange={(e) => handleFieldChange("name", e.target.value, setName)}
+                      placeholder={t("contact.form.name")}
+                      required
+                      minLength={2}
+                      maxLength={80}
+                      autoComplete="name"
+                      disabled={status === "sending"}
+                      aria-invalid={Boolean(fieldErrors.name)}
+                      aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
+                      className={cn(
+                        "bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900",
+                        fieldErrors.name && "border-red-500 focus-visible:ring-red-500/30"
+                      )}
+                    />
+                    <FieldError
+                      id="contact-name-error"
+                      error={fieldErrors.name}
+                      message={errorMessage(fieldErrors.name)}
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Input
+                      type="email"
+                      name="email"
+                      value={email}
+                      onChange={(e) => handleFieldChange("email", e.target.value, setEmail)}
+                      placeholder={t("contact.form.email")}
+                      required
+                      maxLength={254}
+                      autoComplete="email"
+                      disabled={status === "sending"}
+                      aria-invalid={Boolean(fieldErrors.email)}
+                      aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
+                      className={cn(
+                        "bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900",
+                        fieldErrors.email && "border-red-500 focus-visible:ring-red-500/30"
+                      )}
+                    />
+                    <FieldError
+                      id="contact-email-error"
+                      error={fieldErrors.email}
+                      message={errorMessage(fieldErrors.email)}
+                    />
+                  </div>
+                </div>
                 <div className="space-y-1.5">
-                  <Input
-                    name="name"
-                    value={name}
-                    onChange={(e) => handleFieldChange("name", e.target.value, setName)}
-                    placeholder={t("contact.form.name")}
+                  <Textarea
+                    name="message"
+                    value={message}
+                    onChange={(e) => handleFieldChange("message", e.target.value, setMessage)}
+                    placeholder={t("contact.form.message")}
                     required
-                    minLength={2}
-                    maxLength={80}
-                    autoComplete="name"
+                    minLength={10}
+                    maxLength={2000}
                     disabled={status === "sending"}
-                    aria-invalid={Boolean(fieldErrors.name)}
-                    aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
+                    aria-invalid={Boolean(fieldErrors.message)}
+                    aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
                     className={cn(
-                      "bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900",
-                      fieldErrors.name && "border-red-500 focus-visible:ring-red-500/30"
+                      "min-h-[150px] bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900",
+                      fieldErrors.message && "border-red-500 focus-visible:ring-red-500/30"
                     )}
                   />
                   <FieldError
-                    id="contact-name-error"
-                    error={fieldErrors.name}
-                    message={errorMessage(fieldErrors.name)}
+                    id="contact-message-error"
+                    error={fieldErrors.message}
+                    message={errorMessage(fieldErrors.message)}
                   />
                 </div>
-                <div className="space-y-1.5">
-                  <Input
-                    type="email"
-                    name="email"
-                    value={email}
-                    onChange={(e) => handleFieldChange("email", e.target.value, setEmail)}
-                    placeholder={t("contact.form.email")}
-                    required
-                    maxLength={254}
-                    autoComplete="email"
-                    disabled={status === "sending"}
-                    aria-invalid={Boolean(fieldErrors.email)}
-                    aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
+
+                {formFeedback ? (
+                  <p
+                    role="status"
                     className={cn(
-                      "bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900",
-                      fieldErrors.email && "border-red-500 focus-visible:ring-red-500/30"
+                      "text-center text-sm font-medium",
+                      status === "success"
+                        ? "text-emerald-600 dark:text-emerald-400"
+                        : "text-red-600 dark:text-red-400"
                     )}
-                  />
-                  <FieldError
-                    id="contact-email-error"
-                    error={fieldErrors.email}
-                    message={errorMessage(fieldErrors.email)}
-                  />
+                  >
+                    {formFeedback}
+                  </p>
+                ) : null}
+
+                <div className="flex justify-center">
+                  <Button
+                    type="submit"
+                    disabled={status === "sending"}
+                    className="gap-2 bg-emerald-600 transition-all duration-300 group-hover/form:shadow-lg group-hover/form:shadow-emerald-500/20 hover:-translate-y-0.5 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600"
+                  >
+                    {status === "sending" ? (
+                      <>
+                        {t("contact.form.sending")}
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      </>
+                    ) : (
+                      <>
+                        {t("contact.form.send")}
+                        <Send className="h-4 w-4 transition-transform duration-300 group-hover/form:translate-x-0.5 group-hover/form:-translate-y-0.5" />
+                      </>
+                    )}
+                  </Button>
                 </div>
-              </div>
-              <div className="space-y-1.5">
-                <Textarea
-                  name="message"
-                  value={message}
-                  onChange={(e) => handleFieldChange("message", e.target.value, setMessage)}
-                  placeholder={t("contact.form.message")}
-                  required
-                  minLength={10}
-                  maxLength={2000}
-                  disabled={status === "sending"}
-                  aria-invalid={Boolean(fieldErrors.message)}
-                  aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
-                  className={cn(
-                    "min-h-[150px] bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900",
-                    fieldErrors.message && "border-red-500 focus-visible:ring-red-500/30"
-                  )}
-                />
-                <FieldError
-                  id="contact-message-error"
-                  error={fieldErrors.message}
-                  message={errorMessage(fieldErrors.message)}
-                />
-              </div>
-
-              {formFeedback ? (
-                <p
-                  role="status"
-                  className={cn(
-                    "text-center text-sm font-medium",
-                    status === "success"
-                      ? "text-emerald-600 dark:text-emerald-400"
-                      : "text-red-600 dark:text-red-400"
-                  )}
-                >
-                  {formFeedback}
-                </p>
-              ) : null}
-
-              <div className="flex justify-center">
-                <Button
-                  type="submit"
-                  disabled={status === "sending"}
-                  className="gap-2 bg-emerald-600 transition-all duration-300 group-hover/form:shadow-lg group-hover/form:shadow-emerald-500/20 hover:-translate-y-0.5 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600"
-                >
-                  {status === "sending" ? (
-                    <>
-                      {t("contact.form.sending")}
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    </>
-                  ) : (
-                    <>
-                      {t("contact.form.send")}
-                      <Send className="h-4 w-4 transition-transform duration-300 group-hover/form:translate-x-0.5 group-hover/form:-translate-y-0.5" />
-                    </>
-                  )}
-                </Button>
-              </div>
-            </form>
+              </form>
             </motion.div>
           </FadeIn>
 
