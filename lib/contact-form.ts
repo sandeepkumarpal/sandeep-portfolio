@@ -126,6 +126,7 @@ export async function submitContactForm(
   if (honeypot.trim().length > 0) {
     return { ok: false, reason: "bot" };
   }
+  console.log(process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY);
 
   const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
   if (!accessKey) {
