@@ -129,6 +129,7 @@ export async function submitContactForm(
   console.log(process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY);
 
   const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+  console.log('accessKey :>> ', accessKey);
   if (!accessKey) {
     return { ok: false, reason: "notConfigured" };
   }
