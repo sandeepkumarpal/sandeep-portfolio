@@ -25,7 +25,11 @@ import {
   validateAllContactFields,
 } from "@/lib/contact-form";
 import { FadeIn } from "@/components/ui/fade-in";
-import { sectionContent, sectionHeading, sectionInner } from "@/lib/section-styles";
+import {
+  sectionContent,
+  sectionHeading,
+  sectionInner,
+} from "@/lib/section-styles";
 import { cn } from "@/lib/utils";
 
 const ERROR_KEYS: Record<ContactValidationError, string> = {
@@ -51,7 +55,11 @@ function FieldError({
   if (!error) return null;
 
   return (
-    <p id={id} role="alert" className="text-xs font-medium text-red-600 dark:text-red-400">
+    <p
+      id={id}
+      role="alert"
+      className="text-xs font-medium text-red-600 dark:text-red-400"
+    >
       {message}
     </p>
   );
@@ -65,9 +73,9 @@ export function Contact() {
   const [honeypot, setHoneypot] = useState("");
   const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({});
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
-    "idle"
-  );
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
   const [formFeedback, setFormFeedback] = useState("");
 
   const syncFieldValidation = (field: ContactField, value: string) => {
@@ -88,7 +96,7 @@ export function Contact() {
   const handleFieldChange = (
     field: ContactField,
     value: string,
-    setter: (value: string) => void
+    setter: (value: string) => void,
   ) => {
     setter(value);
     syncFieldValidation(field, value);
@@ -111,11 +119,9 @@ export function Contact() {
 
     setFieldErrors({});
     setStatus("sending");
-    console.log('data :>> ', data);
-    console.log('honeypot :>> ', honeypot);
 
     const result = await submitContactForm(data, honeypot);
-    console.log('result :>> ', result);
+
     if (!result.ok) {
       setStatus("error");
       if (result.reason === "notConfigured") {
@@ -133,7 +139,6 @@ export function Contact() {
     setEmail("");
     setMessage("");
   };
-  console.log("latest build")
 
   return (
     <section
@@ -142,7 +147,9 @@ export function Contact() {
       aria-labelledby="contact-heading"
     >
       <div className={`py-8 xl:py-20 ${sectionInner}`}>
-        <div className={`grid gap-8 xl:grid-cols-[1fr_1.5fr_1fr] xl:gap-12 ${sectionContent}`}>
+        <div
+          className={`grid gap-8 xl:grid-cols-[1fr_1.5fr_1fr] xl:gap-12 ${sectionContent}`}
+        >
           {/* Left Column: Contact Info */}
           <FadeIn direction="up" className={`space-y-8 ${sectionHeading}`}>
             <div>
@@ -162,7 +169,10 @@ export function Contact() {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 transition-transform duration-300 group-hover/item:scale-110 dark:bg-emerald-500/15 dark:text-emerald-400">
                   <Mail className="h-5 w-5" />
                 </div>
-                <a href={`mailto:${t("contact.email")}`} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <a
+                  href={`mailto:${t("contact.email")}`}
+                  className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                >
                   {t("contact.email")}
                 </a>
               </div>
@@ -170,7 +180,10 @@ export function Contact() {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 transition-transform duration-300 group-hover/item:scale-110 dark:bg-emerald-500/15 dark:text-emerald-400">
                   <Phone className="h-5 w-5" />
                 </div>
-                <a href={`tel:${t("contact.phone").replace(/\s/g, "")}`} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <a
+                  href={`tel:${t("contact.phone").replace(/\s/g, "")}`}
+                  className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                >
                   {t("contact.phone")}
                 </a>
               </div>
@@ -184,7 +197,12 @@ export function Contact() {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 transition-transform duration-300 group-hover/item:scale-110 dark:bg-emerald-500/15 dark:text-emerald-400">
                   <FolderGit className="h-5 w-5" />
                 </div>
-                <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <a
+                  href={GITHUB_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                >
                   {t("contact.github")}
                 </a>
               </div>
@@ -192,7 +210,12 @@ export function Contact() {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 transition-transform duration-300 group-hover/item:scale-110 dark:bg-emerald-500/15 dark:text-emerald-400">
                   <Building2 className="h-5 w-5" />
                 </div>
-                <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <a
+                  href={LINKEDIN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                >
                   {t("contact.linkedin")}
                 </a>
               </div>
@@ -209,7 +232,11 @@ export function Contact() {
               <motion.div
                 className="pointer-events-none absolute -right-10 -bottom-10 h-28 w-28 rounded-full bg-emerald-500/10 blur-2xl"
                 animate={{ scale: [1, 1.2, 1], opacity: [0.35, 0.7, 0.35] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 4.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 aria-hidden
               />
               <form
@@ -234,7 +261,9 @@ export function Contact() {
                     <Input
                       name="name"
                       value={name}
-                      onChange={(e) => handleFieldChange("name", e.target.value, setName)}
+                      onChange={(e) =>
+                        handleFieldChange("name", e.target.value, setName)
+                      }
                       placeholder={t("contact.form.name")}
                       required
                       minLength={2}
@@ -242,10 +271,13 @@ export function Contact() {
                       autoComplete="name"
                       disabled={status === "sending"}
                       aria-invalid={Boolean(fieldErrors.name)}
-                      aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
+                      aria-describedby={
+                        fieldErrors.name ? "contact-name-error" : undefined
+                      }
                       className={cn(
                         "bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900",
-                        fieldErrors.name && "border-red-500 focus-visible:ring-red-500/30"
+                        fieldErrors.name &&
+                        "border-red-500 focus-visible:ring-red-500/30",
                       )}
                     />
                     <FieldError
@@ -259,17 +291,22 @@ export function Contact() {
                       type="email"
                       name="email"
                       value={email}
-                      onChange={(e) => handleFieldChange("email", e.target.value, setEmail)}
+                      onChange={(e) =>
+                        handleFieldChange("email", e.target.value, setEmail)
+                      }
                       placeholder={t("contact.form.email")}
                       required
                       maxLength={254}
                       autoComplete="email"
                       disabled={status === "sending"}
                       aria-invalid={Boolean(fieldErrors.email)}
-                      aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
+                      aria-describedby={
+                        fieldErrors.email ? "contact-email-error" : undefined
+                      }
                       className={cn(
                         "bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900",
-                        fieldErrors.email && "border-red-500 focus-visible:ring-red-500/30"
+                        fieldErrors.email &&
+                        "border-red-500 focus-visible:ring-red-500/30",
                       )}
                     />
                     <FieldError
@@ -283,17 +320,22 @@ export function Contact() {
                   <Textarea
                     name="message"
                     value={message}
-                    onChange={(e) => handleFieldChange("message", e.target.value, setMessage)}
+                    onChange={(e) =>
+                      handleFieldChange("message", e.target.value, setMessage)
+                    }
                     placeholder={t("contact.form.message")}
                     required
                     minLength={10}
                     maxLength={2000}
                     disabled={status === "sending"}
                     aria-invalid={Boolean(fieldErrors.message)}
-                    aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
+                    aria-describedby={
+                      fieldErrors.message ? "contact-message-error" : undefined
+                    }
                     className={cn(
                       "min-h-[150px] bg-zinc-50/50 transition-all duration-300 hover:border-emerald-500/40 hover:bg-white dark:bg-zinc-900/50 dark:hover:bg-zinc-900",
-                      fieldErrors.message && "border-red-500 focus-visible:ring-red-500/30"
+                      fieldErrors.message &&
+                      "border-red-500 focus-visible:ring-red-500/30",
                     )}
                   />
                   <FieldError
@@ -310,7 +352,7 @@ export function Contact() {
                       "text-center text-sm font-medium",
                       status === "success"
                         ? "text-emerald-600 dark:text-emerald-400"
-                        : "text-red-600 dark:text-red-400"
+                        : "text-red-600 dark:text-red-400",
                     )}
                   >
                     {formFeedback}
@@ -355,10 +397,24 @@ export function Contact() {
               <div className="space-y-2">
                 <p className="text-emerald-600 dark:text-emerald-400">{">_"}</p>
                 <p className="text-zinc-600 dark:text-zinc-400">
-                  <span className="text-purple-600 dark:text-purple-400">const</span> message = <span className="text-emerald-600 dark:text-emerald-400">&quot;{t("contact.terminal.message")}&quot;</span>;
+                  <span className="text-purple-600 dark:text-purple-400">
+                    const
+                  </span>{" "}
+                  message ={" "}
+                  <span className="text-emerald-600 dark:text-emerald-400">
+                    &quot;{t("contact.terminal.message")}&quot;
+                  </span>
+                  ;
                 </p>
                 <p className="text-zinc-600 dark:text-zinc-400">
-                  <span className="text-blue-600 dark:text-blue-400">console</span>.<span className="text-yellow-600 dark:text-yellow-400">log</span>(message);
+                  <span className="text-blue-600 dark:text-blue-400">
+                    console
+                  </span>
+                  .
+                  <span className="text-yellow-600 dark:text-yellow-400">
+                    log
+                  </span>
+                  (message);
                 </p>
                 <p className="mt-4 text-zinc-500 dark:text-zinc-500">
                   {t("contact.terminal.message")}
